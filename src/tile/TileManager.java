@@ -49,26 +49,30 @@ public class TileManager {
             tile[index].image = ImageIO.read(getClass().getResourceAsStream(path));
             tile[index].collision = collision;
         } catch (IOException e) {
-            System.out.println("Failed to load tile: " + path);
             e.printStackTrace();
         }
     }
 
     public void loadMap(String filepath) {
         int cols = 0, rows = 0;
-        // First pass: count rows and columns
+        // Första delen -- räkna ut storleken på kartan
         try (InputStream is = getClass().getResourceAsStream(filepath); BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
             if (is == null) {
                 System.err.println("Map file not found: " + filepath);
                 return;
             }
             String line;
+
+            // så länge det finns en line att läsa
             while ((line = br.readLine()) != null) {
                 line = line.trim();
+                //hoppa över toma rader
                 if (line.isEmpty()) {
                     continue;
                 }
+                //dela upp raden i siffror
                 String[] numbers = line.split("\\s+");
+                //uppdatera kollumnet + rader
                 cols = Math.max(cols, numbers.length);
                 rows++;
             }
@@ -78,23 +82,31 @@ public class TileManager {
         }
 
         if (cols == 0 || rows == 0) {
-            System.err.println("Map file is empty or invalid.");
+            System.err.println("Map file empty");
             return;
         }
 
-        // Update world size
+        // sätta världsgränserna i px och i rutform
+
+
+
         gp.maxWorldCol = cols;
         gp.maxWorldRow = rows;
         gp.worldWidth = cols * gp.tileSize;
         gp.worldHeight = rows * gp.tileSize;
 
+
+        //array som ska lagra vilken ruta finns var
+
         mapTileNum = new int[cols][rows];
 
-        // Second pass: read data, handling 'x' for spawn
+        // andra delen -- förstå datan vi får och läsa den igen
         try (InputStream is = getClass().getResourceAsStream(filepath); BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
             if (is == null) {
                 return;
             }
+
+            //loopa genom rader
             int row = 0;
             String line;
             while ((line = br.readLine()) != null && row < rows) {
@@ -102,23 +114,25 @@ public class TileManager {
                 if (line.isEmpty()) {
                     continue;
                 }
+                //dela upp raden så att vi får varje grej enskilt: "1 0 0 1" -- "1" "0" "0" "1"
                 String[] tokens = line.split("\\s+");
+
+                //loopa genom kolumner
                 for (int col = 0; col < cols; col++) {
+                    //hämta vilken tile vi är på
                     String token = (col < tokens.length) ? tokens[col] : "0";
                     int tileNum;
+
                     if (token.equals("x")) {
-                        // This is the spawn point
+                        // spawn punkten
                         spawnCol = col;
                         spawnRow = row;
-                        tileNum = 4; // stone tile
+                        tileNum = 4;
                     } else {
                         tileNum = Integer.parseInt(token);
                     }
-                    // Validate tile index
-                    if (tileNum < 0 || tileNum >= tile.length || tile[tileNum] == null) {
-                        System.err.println("Invalid tile " + tileNum + " at [" + col + "," + row + "] – using 0");
-                        tileNum = 0;
-                    }
+                    //sätta pusselbiten in i bilden
+
                     mapTileNum[col][row] = tileNum;
                 }
                 row++;
@@ -129,25 +143,29 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2) {
+        //räknar ut vilken tile kameran "börjar i"
         int firstCol = gp.cameraX / gp.tileSize;
         int firstRow = gp.cameraY / gp.tileSize;
-
+        //räknar ut hur långt jag kan se
         int lastCol = firstCol + gp.maxScreenCol + 1;
         int lastRow = firstRow + gp.maxScreenRow + 1;
 
-        // Clamp to world bounds
+        // göra så att vi inte ser utanför världen
         firstCol = Math.max(0, firstCol);
         firstRow = Math.max(0, firstRow);
         lastCol = Math.min(lastCol, gp.maxWorldCol);
         lastRow = Math.min(lastRow, gp.maxWorldRow);
 
+        //ritar ut världen mellan första synliga kolumnen/raden och sista synliga kolumnen/raden
+
         for (int col = firstCol; col < lastCol; col++) {
             for (int row = firstRow; row < lastRow; row++) {
-                int tileNum = mapTileNum[col][row];   // safe now
-                // Also ensure tileNum is within tile array bounds
+                int tileNum = mapTileNum[col][row];   //vilken tile
+                // om den är konstig så sätter vi den till default
                 if (tileNum < 0 || tileNum >= tile.length || tile[tileNum] == null) {
-                    tileNum = 0; // fallback to grass
+                    tileNum = 0;
                 }
+                //från världs position till position på skärmen
                 int worldX = col * gp.tileSize;
                 int worldY = row * gp.tileSize;
                 int screenX = worldX - gp.cameraX;
@@ -170,7 +188,7 @@ public class TileManager {
         int topRow = topWorldY / gp.tileSize;
         int bottomRow = bottomWorldY / gp.tileSize;
 
-        // Check 4 corners
+        // kolla 4 hörn
         if (tile[mapTileNum[leftCol][topRow]].collision) {
             return true;
         }

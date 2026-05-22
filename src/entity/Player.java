@@ -22,8 +22,8 @@ public class Player extends Entity {
     public ArrayList<Item> pItems = new ArrayList<>();
     public ArrayList<Item> pItemsEquipped = new ArrayList<>();
 
-    public Player(String name, int health, int resource, String model) {
-        super(name, health, resource, model);
+    public Player(String name, int health, int resource, String model, MainP gp) {
+        super(name, health, resource, model, gp);
     }
 
 }

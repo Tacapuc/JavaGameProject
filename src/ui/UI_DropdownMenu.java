@@ -110,6 +110,9 @@ public class UI_DropdownMenu extends UI {
         }
         g2.drawImage(gp.t_UI.image, x, y, width, height, null);
         g2.setColor(shownColor);
+        if (name.length() > 15) {
+            name = name.substring(0, 15) + "...";
+        }
         g2.drawString(name, x + 4 + 2, y + 16);
         g2.setColor(Color.white);
         for (int i = 0; i < menu_visible.size(); i++) {

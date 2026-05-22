@@ -24,12 +24,15 @@ public class KeyH implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        int keycode = e.getKeyCode();
+
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int keycode = e.getKeyCode();
+
         if (keycode == KeyEvent.VK_W || keycode == KeyEvent.VK_UP) {
             moveup = true;
 
@@ -86,6 +89,7 @@ public class KeyH implements KeyListener {
         
             ) {
         int keycode = e.getKeyCode();
+
             if (keycode == KeyEvent.VK_W || keycode == KeyEvent.VK_UP) {
                 moveup = false;
 

@@ -24,7 +24,7 @@ public class UI_DamageNumberManager {
 
     ArrayList<UI_DamageNumber> numbers = new ArrayList<>();
 
-    Font font = new Font("Friz Quadrata", Font.PLAIN, 30);
+
 
     public void add(float x, float y, int damage, Color color) {
 
@@ -55,7 +55,7 @@ public class UI_DamageNumberManager {
 
     public void draw(Graphics2D g2) {
 
-        g2.setFont(font);
+        g2.setFont(gp.font.deriveFont(30f));
 
         for (UI_DamageNumber dn : numbers) {
 
@@ -67,11 +67,11 @@ public class UI_DamageNumberManager {
                     dn.color.getBlue(),
                     (int) (alpha * 255)
             );
-
-            g2.setColor(c);
+            g2.setColor(new Color(0, 0, 0, alpha));
             int screenX = (int) dn.x - gp.cameraX;
             int screenY = (int) dn.y - gp.cameraY;
-
+            g2.drawString(dn.text, screenX+2, screenY+2);
+            g2.setColor(c);
             g2.drawString(dn.text, screenX, screenY);
         }
     }

@@ -39,6 +39,8 @@ public class UI_CharacterSheet extends UI {
             return;
         }
 
+
+
         g2.drawImage(image, x, y, width, height, null);
         for (int i = 0; i < p.pItemsEquipped.size(); i++) {
             if (p.pItemsEquipped.get(i).itemSlot < 8) {
@@ -56,6 +58,7 @@ public class UI_CharacterSheet extends UI {
             }
 
         }
+        g2.drawImage(p.down, x+28, y+64, 322, 322, null);
 
 
     }

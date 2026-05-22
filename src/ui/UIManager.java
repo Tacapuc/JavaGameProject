@@ -11,7 +11,7 @@ import main.MainP;
 
 public class UIManager {
 
-    ArrayList<UI> elements = new ArrayList<>();
+    public ArrayList<UI> elements = new ArrayList<>();
 
     public void add(UI element){
         elements.add(element);

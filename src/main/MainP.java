@@ -3,11 +3,14 @@ package main;
 import entity.*;
 import java.awt.*;
 import static java.lang.Math.sqrt;
+
+import loot.LootItem;
 import tile.TileManager;
 import item.ItemHandler;
 import ui.*;
 import combat.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -38,10 +41,11 @@ public class MainP extends javax.swing.JPanel implements Runnable {
     int fps = 60;
     public int tick;
     KeyH keyH = new KeyH(this);
-    public Player p1 = new Player("Tacapuc", 100, 100, "Player");
-    public Enemy e1 = new Enemy("Fiend", 100, 100, "enemy");
+    public ItemHandler iH = new ItemHandler(this);
+    public Player p1 = new Player("Tacapuc", 100, 100, "Player", this);
+    public Enemy e1 = new Enemy("Fiend", 100, 100, "enemy", this);
     TileManager tileM = new TileManager(this);
-    public ItemHandler iH = new ItemHandler(this, p1);
+
     public MouseH mouseH;
     public UIManager uiManager = new UIManager();
     public EntityManager entManager = new EntityManager();
@@ -57,7 +61,8 @@ public class MainP extends javax.swing.JPanel implements Runnable {
     public CombatLogic combatLogic = new CombatLogic(this);
     public UI_DamageNumberManager damageNumberManager= new UI_DamageNumberManager(this);
 
-    Font font = new Font("Friz Quadrata", Font.PLAIN, 13);
+
+    public Font font;
     public Color titleColor = new Color(204, 153, 0);
 
     public MainP(MainF mf) {
@@ -78,13 +83,35 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         startGameThread();
         p1.x = tileM.spawnCol * tileSize;
         p1.y = tileM.spawnRow * tileSize;
+        iH.createItems();
         uiInit();
         entInit();
-        iH.createItems();
-        iH.allItems();
+        initLoot();
+
+        try {
+            font = Font.createFont(
+                    Font.TRUETYPE_FONT,
+                    getClass().getResourceAsStream("frizqt.ttf")
+            ).deriveFont(11f);
+
+            GraphicsEnvironment ge =
+                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+            ge.registerFont(font);
+
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
 
 
 
+
+    }
+
+    public void initLoot() {
+        e1.lootTable.addLootItem(new LootItem(iH.getItem(0), 0.8));
+        e1.lootTable.addLootItem(new LootItem(iH.getItem(2), 0.2));
+        e1.lootTable.addLootItem(new LootItem(iH.getItem(5), 1));
     }
 
     public void uiInit() {
@@ -93,11 +120,14 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         uiManager.add(ufTarget_UI);
         uiManager.add(i_UI);
         uiManager.add(c_UI);
-        uiManager.add(t_UI);
-        uiManager.add(d_UI);
+
         uiManager.add(ab_UI);
         uiManager.add(s_UI);
         uiManager.add(lW_UI);
+
+
+        uiManager.add(t_UI);
+        uiManager.add(d_UI);
 
         ufOwn_UI.toggle();
         ab_UI.toggle();

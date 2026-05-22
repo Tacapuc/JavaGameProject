@@ -35,6 +35,8 @@ public class UI_UnitFrame extends UI {
 
     public void moveFrame() {
         gp.ufOwn_UI.moving = true;
+        x = gp.mouseH.mouseX;
+        y = gp.mouseH.mouseY;
 
     }
     public void resetPosition() {

@@ -134,9 +134,7 @@ public class MouseH implements MouseMotionListener, MouseListener {
         }
         gp.t_UI.visible = hoveringItem;
 
-        if (!hoveringItem) {
-            gp.t_UI.visible = false;
-        }
+
     }
 
     @Override
@@ -151,12 +149,20 @@ public class MouseH implements MouseMotionListener, MouseListener {
 
         }
 
+
         if (gp.c_UI.visible) {
             tooltip(p.pItemsEquipped);
 
         } else if (gp.i_UI.visible) {
             tooltip(p.pItems);
 
+        } else if (gp.lW_UI.visible) {
+            tooltip(gp.lW_UI.npc.drops);
+
+        } else {
+            gp.t_UI.visible = false;
+            hoveringItem = false;
+            hoveredItem = null;
         }
 
         if (gp.d_UI.visible) {
@@ -177,7 +183,7 @@ public class MouseH implements MouseMotionListener, MouseListener {
         }
     }
     
-    public void openLootFrame(int x, int y) {
+    public void openLootFrame() {
         if (hoveringEnt && entHovered.dead) {
             gp.lW_UI.npc = entHovered;
             gp.lW_UI.x = mouseX;
@@ -188,10 +194,25 @@ public class MouseH implements MouseMotionListener, MouseListener {
         }
     }
 
+    public void lootItem(ArrayList<Item> items) {
+        if (!items.isEmpty()) {
+            for (int i = items.size() - 1; i >= 0; i--) {
+                Item item = items.get(i);
+                if (mouseX <= item.x + 32 && mouseX >= item.x) {
+                    if (mouseY <= item.y + 32 && mouseY >= item.y) {
+                        gp.iH.addItem(item.id);
+                        items.remove(i);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     public void mousePressed(MouseEvent e) {
         hoverFrame();
         if (SwingUtilities.isRightMouseButton(e)) {
-            openLootFrame(mouseX, mouseY);
+            openLootFrame();
             if (hoveringItem) {
                 gp.d_UI.shownColor = color;
                 gp.d_UI.callMenu(gp.d_UI.menu_itemUnit);
@@ -220,6 +241,10 @@ public class MouseH implements MouseMotionListener, MouseListener {
             gp.ufOwn_UI.moving = false;
 
         }
+        if (gp.lW_UI.visible) {
+            lootItem(gp.lW_UI.npc.drops);
+        }
+
 
         if (hoveringEnt) {
             clearTarget();

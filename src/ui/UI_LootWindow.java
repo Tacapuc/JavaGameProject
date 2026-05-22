@@ -10,6 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import item.Item;
 import main.MainP;
 
 /**
@@ -49,6 +51,23 @@ public class UI_LootWindow extends UI {
         g2.drawImage(npc.down, portraitX, portraitY, portraitDim, portraitDim, null);
 
         g2.drawImage(image, x, y, width, height, null);
+        loadItems(g2);
+
+
+
+    }
+    public void loadItems(Graphics2D g2){
+        for (int i = 0; i < npc.drops.size(); i++) {
+            npc.drops.get(i).x = x+26;
+            npc.drops.get(i).y = y+36*i+78;
+            g2.drawImage(npc.drops.get(i).image, npc.drops.get(i).x, npc.drops.get(i).y, 32, 32, null);
+            g2.setColor(npc.drops.get(i).getColor());
+            String itemName = npc.drops.get(i).name;
+            if (npc.drops.get(i).name.length() > 15) {
+                itemName = npc.drops.get(i).name.substring(0, 15) + "...";
+            }
+            g2.drawString(itemName, npc.drops.get(i).x+32+8, npc.drops.get(i).y+18);
+        }
     }
 
 }

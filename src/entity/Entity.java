@@ -10,8 +10,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
+
+import item.Item;
 import main.MainP;
+import loot.*;
 
 /**
  *
@@ -35,17 +39,22 @@ public abstract class Entity {
     public boolean attackable = true;
     BufferedImage left, right, highlight, deadEnt;
     public boolean dead = false;
+    public LootTable lootTable;
+    public ArrayList<Item> drops = new ArrayList<>();
+
     
     public Rectangle solidArea;
     public Rectangle hitBox;
     public int screenX;
     public int screenY;
     public boolean targeted = false;
+    MainP gp;
 
-    public Entity(String name, int health, int resource, String model) {
+    public Entity(String name, int health, int resource, String model, MainP gp) {
         this.name = name;
         this.health = health;
         this.resource = resource;
+        this.gp = gp;
         solidArea = new Rectangle(8, 8, tileSize - 16, tileSize - 16);
 
         try {
@@ -66,12 +75,26 @@ public abstract class Entity {
     public String toString() {
         return "Entity{" + "name=" + name + ", health=" + health + ", resource=" + resource + ", x=" + screenX + ", y=" + screenY + ", currentHealth=" + currentHealth + ", currentResource=" + currentResource + ", model=" + model + '}' + "Dead = " + dead;
     }
+
+    public ArrayList<Item> dropLoot() {
+        if (lootTable == null) {
+            return new ArrayList<>();
+        }
+        return lootTable.dropLoot();
+    }
+
+
+
     
     public void die() {
         attackable = false;
         currentHealth = 0;
         image = deadEnt;
         dead = true;
+        drops = dropLoot();
+        for (Item item: drops) {
+            System.out.println(item);
+        }
     }
 
     public void drawEntity(Graphics2D g2, MainP gp) {
