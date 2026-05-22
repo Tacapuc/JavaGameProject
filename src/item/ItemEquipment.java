@@ -1,0 +1,17 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package item;
+
+/**
+ *
+ * @author ilya.bespalov
+ */
+public class ItemEquipment extends Item{
+    int[] stats;
+    public ItemEquipment(int id, int quality, String name, String filePath, String type, int itemSlot) {
+        super(id, quality, name, filePath, type, itemSlot);
+    }
+    
+}
