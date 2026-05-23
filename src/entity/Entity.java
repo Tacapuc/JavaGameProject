@@ -41,6 +41,14 @@ public abstract class Entity {
     public boolean dead = false;
     public LootTable lootTable;
     public ArrayList<Item> drops = new ArrayList<>();
+    public ArrayList<ArrayList<BufferedImage>> fullAttackAnim = new ArrayList<>();
+    public ArrayList<ArrayList<BufferedImage>> fullRunAnim = new ArrayList<>();
+    public ArrayList<BufferedImage> attackAnim = new ArrayList<>();
+    public ArrayList<BufferedImage> runAnim = new ArrayList<>();
+    public Boolean running = false;
+    int animInt = 0;
+    int animNum = 0;
+    public boolean playingAttackAnim;
 
     
     public Rectangle solidArea;
@@ -51,6 +59,7 @@ public abstract class Entity {
     MainP gp;
 
     public Entity(String name, int health, int resource, String model, MainP gp) {
+        this.model = model;
         this.name = name;
         this.health = health;
         this.resource = resource;
@@ -68,7 +77,33 @@ public abstract class Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        loadAnimation("attack", 10, fullAttackAnim);
+        loadAnimation("run", 8, fullRunAnim);
 
+
+
+
+    }
+
+
+    public void loadAnimation(String animation, int frames, ArrayList<ArrayList<BufferedImage>> fullAnimation) {
+
+        String[] directions = {"up", "down", "left", "right"};
+
+        for (String direction : directions) {
+            ArrayList<BufferedImage> directionFrames = new ArrayList<>();
+            for (int i = 0; i < frames; i++) {
+                String filepath = "/resources/entity/" + model + "/" + animation + "/" + direction + "/humanmale_" + i + ".png";
+                System.out.println(filepath);
+                try {
+                    BufferedImage frame = ImageIO.read(getClass().getResource(filepath));
+                    directionFrames.add(frame);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            fullAnimation.add(directionFrames);
+        }
     }
 
     @Override
@@ -81,6 +116,42 @@ public abstract class Entity {
             return new ArrayList<>();
         }
         return lootTable.dropLoot();
+    }
+
+    public void anim(ArrayList<ArrayList<BufferedImage>> animation, Boolean statement) {
+        if (statement) {
+            ArrayList<BufferedImage> activeAnimation = new ArrayList<>();
+            switch (direction) {
+                case "up":
+                    activeAnimation = animation.get(0);
+                    break;
+                case "down":
+                    activeAnimation = animation.get(1);
+                    break;
+                case "left":
+                    activeAnimation = animation.get(2);
+                    break;
+                case "right":
+                    activeAnimation = animation.get(3);
+                    break;
+            }
+
+            animInt++;
+
+            if (animInt >= 60/activeAnimation.size()) {
+                animNum++;
+                if (animNum >= activeAnimation.size()) {
+                    animNum = 0;
+                }
+                animInt = 0;
+            }
+
+
+
+            image = activeAnimation.get(animNum);
+        }
+
+
     }
 
 
@@ -98,7 +169,10 @@ public abstract class Entity {
     }
 
     public void drawEntity(Graphics2D g2, MainP gp) {
-        if (currentHealth != 0) {
+        anim(fullRunAnim, running);
+        anim(fullAttackAnim, playingAttackAnim);
+
+        if (currentHealth != 0 && !running && !playingAttackAnim) {
             switch (direction) {
             case "up":
                 image = up;

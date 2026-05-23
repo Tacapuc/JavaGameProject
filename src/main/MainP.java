@@ -42,7 +42,7 @@ public class MainP extends javax.swing.JPanel implements Runnable {
     public int tick;
     KeyH keyH = new KeyH(this);
     public ItemHandler iH = new ItemHandler(this);
-    public Player p1 = new Player("Tacapuc", 100, 100, "Player", this);
+    public Player p1 = new Player("Tacapuc", 100, 100, "player", this);
     public Enemy e1 = new Enemy("Fiend", 100, 100, "enemy", this);
     TileManager tileM = new TileManager(this);
 
@@ -88,17 +88,9 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         entInit();
         initLoot();
 
-        try {
-            font = Font.createFont(
-                    Font.TRUETYPE_FONT,
-                    getClass().getResourceAsStream("frizqt.ttf")
-            ).deriveFont(11f);
-
-            GraphicsEnvironment ge =
-                    GraphicsEnvironment.getLocalGraphicsEnvironment();
-
+        try {font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("frizqt.ttf")).deriveFont(11f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
-
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
@@ -143,11 +135,8 @@ public class MainP extends javax.swing.JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setFont(font);
         g2.setColor(Color.white);
         tileM.draw(g2);
@@ -191,7 +180,6 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         int dx = 0;
         int dy = 0;
         damageNumberManager.update();
-
         if (keyH.moveup) {
             p1.direction = "up";
             dy -= speed;
@@ -207,6 +195,11 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         if (keyH.moveright) {
             p1.direction = "right";
             dx += speed;
+        }
+        if (!p1.playingAttackAnim) {
+            p1.running = (dx != 0 || dy != 0);
+        } else {
+            p1.running = false;
         }
 
         double nextX = p1.x + dx;

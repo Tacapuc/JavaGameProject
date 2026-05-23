@@ -25,6 +25,7 @@ public class CombatLogic {
     Random rn = new Random();
     public int damageDone;
 
+
     public CombatLogic(MainP gp) {
         this.gp = gp;
     }
@@ -39,6 +40,8 @@ public class CombatLogic {
     }
 
     public void attack() {
+        System.out.println(gp.p1.playingAttackAnim);
+        System.out.println(attackCooldown);
 
     if (!attacking) return;
 
@@ -48,9 +51,14 @@ public class CombatLogic {
     }
 
     if (attackCooldown > 0) {
+        if (attackCooldown>=60) {
+            gp.p1.playingAttackAnim = true;
+
+        } else gp.p1.playingAttackAnim = false;
         attackCooldown--;
         return;
     }
+
 
     Entity target = gp.mouseH.targetedEnt;
 
@@ -58,16 +66,12 @@ public class CombatLogic {
 
         damageDone = rn.nextInt(20, 25);
 
+
         target.currentHealth -= damageDone;
         int damageX = (int) target.x;
         int damageY = (int) target.y;
 
-        gp.damageNumberManager.add(
-            damageX,
-            damageY,
-            damageDone,
-            Color.YELLOW
-        );
+        gp.damageNumberManager.add(damageX, damageY, damageDone, Color.YELLOW);
 
         if (target.currentHealth <= 0) {
             target.die();
