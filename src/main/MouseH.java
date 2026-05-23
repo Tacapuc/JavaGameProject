@@ -52,6 +52,8 @@ public class MouseH implements MouseMotionListener, MouseListener {
 
     }
 
+    //kollar om jag hoverar över UnitFrame
+
     public void hoverFrame() {
         if ((mouseX <= gp.ufOwn_UI.x + gp.ufOwn_UI.width) && (mouseX >= gp.ufOwn_UI.x) && ((mouseY <= gp.ufOwn_UI.y + gp.ufOwn_UI.height) && (mouseY >= gp.ufOwn_UI.y))) {
             hoveringFrame = true;
@@ -59,6 +61,9 @@ public class MouseH implements MouseMotionListener, MouseListener {
             hoveringFrame = false;
         }
     }
+
+
+    //Rensar min valda target
 
     public void clearTarget() {
         targetedEnt = null;
@@ -69,6 +74,8 @@ public class MouseH implements MouseMotionListener, MouseListener {
 
         }
     }
+
+    //kollar hover över fiende
 
     public void hoverEnemy() {
         if (hoveringEnt && entHovered instanceof Enemy && !entHovered.dead) {
@@ -86,6 +93,8 @@ public class MouseH implements MouseMotionListener, MouseListener {
         }
     }
 
+    //kollar hover över vilken ent som helst
+
     public void hoverEnt() {
         hoveringEnt = false;
         entHovered = null;
@@ -100,6 +109,8 @@ public class MouseH implements MouseMotionListener, MouseListener {
         }
     }
 
+    //koden för att spawna tooltips som tar in vilka items den ska skanna efter på skärmen
+
     public void tooltip(ArrayList<Item> items) {
 
         hoveringItem = false;
@@ -107,6 +118,7 @@ public class MouseH implements MouseMotionListener, MouseListener {
         for (int i = 0; i < items.size(); i++) {
             if ((mouseX <= items.get(i).x + 32) && (mouseX >= items.get(i).x)) {
                 if ((mouseY <= items.get(i).y + 32) && (mouseY >= items.get(i).y)) {
+                    //sätter in informationen i tooltipen
                     ArrayList<String> dStrings = new ArrayList<>();
                     hoveringItem = true;
                     hoveredItem = items.get(i);
@@ -118,6 +130,7 @@ public class MouseH implements MouseMotionListener, MouseListener {
                     dStrings.add(items.get(i).getQuality());
                     gp.t_UI.dStrings = dStrings;
                     int longestString = 0;
+                    //försök på anpassade tooltips efter längden i tecken
                     for (int j = 0; j < dStrings.size(); j++) {
 
                         int comparedString = dStrings.get(j).length();
@@ -143,11 +156,16 @@ public class MouseH implements MouseMotionListener, MouseListener {
         mouseY = e.getY();
         hoverEnt();
         hoverEnemy();
+
+        //flytta på ramen av spelarens liv om man vill
         if (gp.ufOwn_UI.moving) {
             gp.ufOwn_UI.x = mouseX;
             gp.ufOwn_UI.y = mouseY;
 
         }
+
+
+        //tooltips för olika menyer
 
 
         if (gp.c_UI.visible) {
@@ -164,6 +182,8 @@ public class MouseH implements MouseMotionListener, MouseListener {
             hoveringItem = false;
             hoveredItem = null;
         }
+
+        //skannar efter vilken button vi hoverar över om vi har en dropdownmenu öppen
 
         if (gp.d_UI.visible) {
 
@@ -182,6 +202,9 @@ public class MouseH implements MouseMotionListener, MouseListener {
 
         }
     }
+
+
+
     
     public void openLootFrame() {
         if (hoveringEnt && entHovered.dead) {
@@ -193,6 +216,9 @@ public class MouseH implements MouseMotionListener, MouseListener {
             
         }
     }
+
+
+    //tar in items, oom listan inte är tom och vi hoverar över itemet så ska det skickas tillvårt inventory.
 
     public void lootItem(ArrayList<Item> items) {
         if (!items.isEmpty()) {
@@ -213,6 +239,9 @@ public class MouseH implements MouseMotionListener, MouseListener {
         hoverFrame();
         if (SwingUtilities.isRightMouseButton(e)) {
             openLootFrame();
+
+
+            //logiken för att calla efter dropdown menu, borde egentligen göras om till metoder men det här duger så länge
             if (hoveringItem) {
                 gp.d_UI.shownColor = color;
                 gp.d_UI.callMenu(gp.d_UI.menu_itemUnit);
@@ -230,28 +259,36 @@ public class MouseH implements MouseMotionListener, MouseListener {
                 gp.d_UI.name = p.name;
                 gp.d_UI.toggle();
             }
+
+            //börja attackera valda ent varannan sekund om den är enemy
+
             if (targetedEnt != null && hoveringEnemy) {
-                gp.combatLogic.startAttack(2, targetedEnt);
+                gp.combatLogic.startAttack(2);
                 
                 
             }
         }
 
+        //sluta flytta på framen om vi så gör
+
         if (gp.ufOwn_UI.moving == true) {
             gp.ufOwn_UI.moving = false;
 
         }
+        //loota grej
+
         if (gp.lW_UI.visible) {
             lootItem(gp.lW_UI.npc.drops);
         }
+
+
+        //targetta en entity
 
 
         if (hoveringEnt) {
             clearTarget();
             entHovered.targeted = true;
             targetedEnt = entHovered;
-            System.out.println("Found");
-            System.out.println(entHovered);
             gp.ufTarget_UI.setEnt(entHovered);
 
             if (!gp.ufTarget_UI.visible) {

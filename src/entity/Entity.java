@@ -48,7 +48,9 @@ public abstract class Entity {
     public Boolean running = false;
     int animInt = 0;
     int animNum = 0;
-    public boolean playingAttackAnim;
+    public boolean playingAttackAnim = false;
+    public boolean attacking = false;
+    String currentAnim = "";
 
     
     public Rectangle solidArea;
@@ -86,6 +88,10 @@ public abstract class Entity {
     }
 
 
+    //Ladda in bilder i en ArrayList som innehåller alla bilder med en viss riktning för en viss animation som ska sen i en annan ArrayList som är huvud ArrayListen för hela animationen
+    //Så vi får e.x: Springa/Upp/bild1, bild2 ...
+
+
     public void loadAnimation(String animation, int frames, ArrayList<ArrayList<BufferedImage>> fullAnimation) {
 
         String[] directions = {"up", "down", "left", "right"};
@@ -111,6 +117,8 @@ public abstract class Entity {
         return "Entity{" + "name=" + name + ", health=" + health + ", resource=" + resource + ", x=" + screenX + ", y=" + screenY + ", currentHealth=" + currentHealth + ", currentResource=" + currentResource + ", model=" + model + '}' + "Dead = " + dead;
     }
 
+    //räkna ut i lootTabellen vilka saker som ska droppas ur en fiende när den dör.
+
     public ArrayList<Item> dropLoot() {
         if (lootTable == null) {
             return new ArrayList<>();
@@ -118,9 +126,25 @@ public abstract class Entity {
         return lootTable.dropLoot();
     }
 
-    public void anim(ArrayList<ArrayList<BufferedImage>> animation, Boolean statement) {
+    public void anim(String animName, ArrayList<ArrayList<BufferedImage>> animation, Boolean statement) {
+
+        if (!statement) {
+            return;
+        }
+
+        //för att undvika ArrayOutofBounds och för bättre stil för att undvika att animationer börjar mitti
+
+        if (!currentAnim.equals(animName)) {
+            animNum = 0;
+            animInt = 0;
+            currentAnim = animName;
+        }
+
+
+
         if (statement) {
             ArrayList<BufferedImage> activeAnimation = new ArrayList<>();
+            //välja rätt lista med saker
             switch (direction) {
                 case "up":
                     activeAnimation = animation.get(0);
@@ -137,6 +161,8 @@ public abstract class Entity {
             }
 
             animInt++;
+
+            //hur ofta varje vild ska bitas
 
             if (animInt >= 60/activeAnimation.size()) {
                 animNum++;
@@ -163,14 +189,12 @@ public abstract class Entity {
         image = deadEnt;
         dead = true;
         drops = dropLoot();
-        for (Item item: drops) {
-            System.out.println(item);
-        }
+
     }
 
     public void drawEntity(Graphics2D g2, MainP gp) {
-        anim(fullRunAnim, running);
-        anim(fullAttackAnim, playingAttackAnim);
+        anim("run", fullRunAnim, running);
+        anim("attack", fullAttackAnim, playingAttackAnim);
 
         if (currentHealth != 0 && !running && !playingAttackAnim) {
             switch (direction) {
@@ -187,8 +211,28 @@ public abstract class Entity {
                 image = right;
                 break;
         }
+
+
             
         }
+        if (currentHealth != 0 && !running && !playingAttackAnim && attacking) {
+            switch (direction) {
+                case "up":
+                    image = fullAttackAnim.get(0).get(0);
+                    break;
+                case "down":
+                    image = fullAttackAnim.get(1).get(0);
+                    break;
+                case "left":
+                    image = fullAttackAnim.get(2).get(0);
+                    break;
+                case "right":
+                    image = fullAttackAnim.get(3).get(0);
+                    break;
+            }
+
+        }
+
         
         screenX = (int) x - gp.cameraX;
         screenY = (int) y - gp.cameraY;

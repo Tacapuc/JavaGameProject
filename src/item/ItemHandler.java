@@ -3,7 +3,10 @@ package item;
 import java.util.ArrayList;
 import main.MainP;
 import entity.Player;
-
+/**
+ *
+ * @author ilya.bespalov
+ */
 public class ItemHandler {
 
     public ArrayList<Item> items = new ArrayList<>();

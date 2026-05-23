@@ -28,11 +28,14 @@ public class UI_DropdownBtn extends UI {
     Runnable method;
     public boolean buttonHighlight;
 
+    //priority number skulla vara en grej som sorterar knapparna i menyerna så att de skulle alltid hamna i korrekt ordning men det blev inget av det
+
     public UI_DropdownBtn(int priorityNumber, String name, Runnable method) {
         this.priorityNumber = priorityNumber;
         this.name = name;
         this.method = method;
         try {
+            //highlight texturen(förut var bara gul rektangel me njag snodde den här fina grejen ur WoW)
             image = ImageIO.read(getClass().getResource("/resources/ui/UI-Listbox-Highlight.PNG"));
         } catch (IOException e) {
             e.printStackTrace();

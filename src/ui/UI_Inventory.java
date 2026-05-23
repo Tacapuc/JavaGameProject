@@ -44,18 +44,11 @@ public class UI_Inventory extends UI {
     }
 
     public void loadInventory(Graphics2D g2) {
+        //rita ut sakerna som spelaren äger och inte har på sig med jämna mellan rum och max 4 per rad
         for (int i = 0; i < p.pItems.size(); i++) {
             p.pItems.get(i).x = gp.scWidth - width + 64 + 42 * (i % 4);
             p.pItems.get(i).y = gp.scHeight - height + 47 + (36 + 5) * (i / 4);
-
-            g2.drawImage(
-                    p.pItems.get(i).image,
-                    p.pItems.get(i).x,
-                    p.pItems.get(i).y,
-                    32,
-                    32,
-                    null
-            );
+            g2.drawImage(p.pItems.get(i).image, p.pItems.get(i).x, p.pItems.get(i).y, 32, 32, null);
         }
 
     }

@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class CombatLogic {
 
-    Rectangle hitBox;
+
     MainP gp;
     boolean attacking;
     public int attackInterval;
@@ -30,25 +30,28 @@ public class CombatLogic {
         this.gp = gp;
     }
 
-    public void startAttack(int interval, Entity target) {
+    public void startAttack(int interval) {
         attackInterval = interval;
         if (!attacking) {
             attacking = true;
+            gp.p1.attacking = true;
         } else {
             return;
         }
     }
 
     public void attack() {
-        System.out.println(gp.p1.playingAttackAnim);
-        System.out.println(attackCooldown);
-
+//om inget ska hända returnar den
     if (!attacking) return;
 
     if (gp.mouseH.targetedEnt == null) {
         attacking = false;
+        gp.p1.attacking = false;
+        gp.p1.playingAttackAnim = false;
         return;
     }
+
+    //inte gå vidare om ingen attack ska ske
 
     if (attackCooldown > 0) {
         if (attackCooldown>=60) {
@@ -58,6 +61,8 @@ public class CombatLogic {
         attackCooldown--;
         return;
     }
+
+
 
 
     Entity target = gp.mouseH.targetedEnt;
@@ -71,6 +76,8 @@ public class CombatLogic {
         int damageX = (int) target.x;
         int damageY = (int) target.y;
 
+
+
         gp.damageNumberManager.add(damageX, damageY, damageDone, Color.YELLOW);
 
         if (target.currentHealth <= 0) {
@@ -81,6 +88,8 @@ public class CombatLogic {
     
 }
     }
+
+    //om mainEnt kollar på checkedEnt i intervallet av range meter ska den returnera true
 
     public boolean checkFacing(Entity mainEnt, Entity checkedEnt, int range) {
 

@@ -6,7 +6,10 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.Color;
 import main.MainP;
-
+/**
+ *
+ * @author ilya.bespalov
+ */
 public abstract class Item {
 
     public int id;

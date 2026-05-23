@@ -86,6 +86,8 @@ public class UI_DropdownMenu extends UI {
     public void createButton(String name, int prio, Runnable method, ArrayList menu) {
         UI_DropdownBtn btn = new UI_DropdownBtn(prio, name, method);
         menu.add(btn);
+
+        //anropa meny
     }
 
     public void callMenu(ArrayList menu) {
@@ -94,6 +96,7 @@ public class UI_DropdownMenu extends UI {
 
     @Override
     public void draw(Graphics2D g2, MainP gp) {
+        //rita ut anropad meny
         if (!visible) {
             return;
         }

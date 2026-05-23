@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.Scanner;
 
+
+//BEDÖM INTE DETTA; DETTA VAR EN AIGENERERAD KARTA SKAPARE FÖR JAG INTE ORKADE SITTA I EN NOTEPAD FIL OCH ÄNDRA SIFFROR
+
 public class MapEditor extends JFrame {
     private static final int TILE_SIZE = 32;
     private static final int DEFAULT_COLS = 20;

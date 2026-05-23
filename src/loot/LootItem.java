@@ -1,4 +1,9 @@
 package loot;
+
+/**
+ *
+ * @author ilya.bespalov
+ */
 import item.*;
 
 public class LootItem {

@@ -13,6 +13,9 @@ import entity.*;
  *
  * @author ilya.bespalov
  */
+
+
+//den här grejen blev inte klar
 public abstract class Spell {
     public int spellId;
     String name;

@@ -1,5 +1,8 @@
 package loot;
-
+/**
+ *
+ * @author ilya.bespalov
+ */
 import item.Item;
 
 import java.util.ArrayList;

@@ -22,10 +22,10 @@ public class UI_DamageNumber {
 
     public Color color;
 
-    public int life = 60; // frames
-    public int maxLife = 60;
+    public int life = 60; // livstid av texten i hur många frames/"uppdateringar" den ska leva
+    public int maxLife = 60; //ursprungliga livstiden
 
-    public float ySpeed = -0.5f;
+    public float ySpeed = -0.5f; //hur stort varje steg är.
 
     public UI_DamageNumber(float x, float y, String text, Color color) {
         this.x = x;

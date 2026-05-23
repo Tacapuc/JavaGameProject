@@ -40,18 +40,25 @@ public class UI_CharacterSheet extends UI {
         }
 
 
+        //med avseende på vilken slot ett item har så ritas alla saker i en lista på sin fast plats
+
+
 
         g2.drawImage(image, x, y, width, height, null);
         for (int i = 0; i < p.pItemsEquipped.size(); i++) {
+            //vänster sida
             if (p.pItemsEquipped.get(i).itemSlot < 8) {
                 p.pItemsEquipped.get(i).x = x + 24;
                 p.pItemsEquipped.get(i).y = y + 77 + 41 * (p.pItemsEquipped.get(i).itemSlot - 1);
                 g2.drawImage(p.pItemsEquipped.get(i).image, p.pItemsEquipped.get(i).x, p.pItemsEquipped.get(i).y , 32, 32, null);
-            } else if (p.pItemsEquipped.get(i).itemSlot > 8 && p.pItemsEquipped.get(i).itemSlot < 17) {
+            } //höger sida
+            else if (p.pItemsEquipped.get(i).itemSlot > 8 && p.pItemsEquipped.get(i).itemSlot < 17) {
                 p.pItemsEquipped.get(i).x = x + 308;
                 p.pItemsEquipped.get(i).y = y + 77 + 41 * (p.pItemsEquipped.get(i).itemSlot - 9);
                 g2.drawImage(p.pItemsEquipped.get(i).image, p.pItemsEquipped.get(i).x, p.pItemsEquipped.get(i).y , 32, 32, null);
-            } else if (p.pItemsEquipped.get(i).itemSlot >= 17) {
+            }
+            //vapen och sånt där nere
+            else if (p.pItemsEquipped.get(i).itemSlot >= 17) {
                 p.pItemsEquipped.get(i).x = x + 124 + 41 * (p.pItemsEquipped.get(i).itemSlot - 17) ;
                 p.pItemsEquipped.get(i).y = y + 387;
                 g2.drawImage(p.pItemsEquipped.get(i).image, p.pItemsEquipped.get(i).x, p.pItemsEquipped.get(i).y , 32, 32, null);
