@@ -36,6 +36,7 @@ public class UI_DropdownMenu extends UI {
     public String name = "Undefined";
 
     public UI_DropdownMenu(MainP gp) {
+        closeOnEsc = false;
         this.gp = gp;
 
     }

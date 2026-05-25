@@ -6,10 +6,12 @@ package tile;
 
 import entity.Player;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import main.MainP;
@@ -21,26 +23,61 @@ public class TileManager {
     int mapTileNum[][];
     public int spawnCol = 0;
     public int spawnRow = 0;
+    int waterTick =0;
+    int waterImage =0;
+    ArrayList<BufferedImage> waterImages = new ArrayList<>();
+
 
     public TileManager(MainP gp) {
         this.gp = gp;
 
+
         tile = new Tile[10];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
+        loadWaterImages();
         loadMap("/resources/maps/castletest");
     }
 
     public void getTileImage() {
         loadTile(0, "/resources/tiles/tiles/void.png", true);
         loadTile(1, "/resources/tiles/tiles/grass4.png", false);
-        loadTile(2, "/resources/tiles/water.png", true);
+        loadTile(2, "/resources/tiles/water0.png", true);
         loadTile(3, "/resources/tiles/sand.png", false);
         loadTile(4, "/resources/tiles/tiles/stone1.PNG", false);
         loadTile(5, "/resources/tiles/tiles/stone2.png", true);
         loadTile(6, "/resources/tiles/leaf.png", true);
         loadTile(7, "/resources/tiles/ph1.png", false);
 
+    }
+
+    public void loadWaterImages() {
+
+        for (int i =0; i<3; i++) {
+            BufferedImage waterImg;
+            try {
+                waterImg = ImageIO.read(getClass().getResourceAsStream("/resources/tiles/water" + i + ".png"));
+                waterImages.add(waterImg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
+    }
+
+    public void updateWater(int updateRate) {
+        waterTick++;
+        if (waterTick == updateRate) {
+            waterTick = 0;
+            waterImage++;
+
+        }
+        if (waterImage == 3) {
+            waterImage = 0;
+        }
+        tile[2].image = waterImages.get(waterImage);
     }
 
     private void loadTile(int index, String path, boolean collision) {
@@ -143,6 +180,7 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2) {
+        updateWater(60);
         //räknar ut vilken tile kameran "börjar i"
         int firstCol = gp.cameraX / gp.tileSize;
         int firstRow = gp.cameraY / gp.tileSize;

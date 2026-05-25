@@ -25,11 +25,11 @@ public abstract class Entity {
 
     public String name;
     public int health;
-    public int resource;
+    public int maxResource;
     public double x;
     public double y;
     public int currentHealth = 100;
-    public int currentResource = 100;
+    public int currentResource = 0;
     private BufferedImage image;
     public int tileSize = MainP.tileSize;
     public String direction = "down";
@@ -60,11 +60,11 @@ public abstract class Entity {
     public boolean targeted = false;
     MainP gp;
 
-    public Entity(String name, int health, int resource, String model, MainP gp) {
+    public Entity(String name, int health, int maxResource, String model, MainP gp) {
         this.model = model;
         this.name = name;
         this.health = health;
-        this.resource = resource;
+        this.maxResource = maxResource;
         this.gp = gp;
         solidArea = new Rectangle(8, 8, tileSize - 16, tileSize - 16);
 
@@ -114,7 +114,7 @@ public abstract class Entity {
 
     @Override
     public String toString() {
-        return "Entity{" + "name=" + name + ", health=" + health + ", resource=" + resource + ", x=" + screenX + ", y=" + screenY + ", currentHealth=" + currentHealth + ", currentResource=" + currentResource + ", model=" + model + '}' + "Dead = " + dead;
+        return "Entity{" + "name=" + name + ", health=" + health + ", resource=" + maxResource + ", x=" + screenX + ", y=" + screenY + ", currentHealth=" + currentHealth + ", currentResource=" + currentResource + ", model=" + model + '}' + "Dead = " + dead;
     }
 
     //räkna ut i lootTabellen vilka saker som ska droppas ur en fiende när den dör.

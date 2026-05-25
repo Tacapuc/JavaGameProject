@@ -22,6 +22,7 @@ public class UI_ActionBar extends UI {
     
     
     public UI_ActionBar () {
+        closeOnEsc = false;
         try {
             image = ImageIO.read(getClass().getResource("/resources/ui/spellbar.png"));
         } catch (IOException e) {

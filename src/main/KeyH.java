@@ -10,12 +10,11 @@ import java.awt.event.KeyListener;
 import ui.UI;
 import main.*;
 import combat.*;
+import ui.UIManager;
 
 public class KeyH implements KeyListener {
 
     public boolean moveup, movedown, moveleft, moveright, inventory;
-    public int keypressedx = 0;
-    public int keypressedy = 0;
     MainP gp;
 
     public KeyH(MainP gp) {
@@ -76,10 +75,18 @@ public class KeyH implements KeyListener {
 
         }
         if (keycode == KeyEvent.VK_ESCAPE) {
-            gp.lW_UI.visible = false;
-            gp.ufTarget_UI.visible = false;
+            for (int i = 0; i<gp.uiManager.elements.size(); i++) {
+                if (gp.uiManager.elements.get(i).closeOnEsc) {
+                    gp.uiManager.elements.get(i).visible = false;
+                }
+            }
             gp.mouseH.clearTarget();
             
+
+        }
+        if (keycode == KeyEvent.VK_F1) {
+            gp.kbg_UI.toggle();
+
 
         }
     }

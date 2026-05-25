@@ -30,6 +30,7 @@ public class UI_UnitFrame extends UI {
     Entity ent = null;
     Player p;
     String health;
+    String resource;
     BufferedImage image, image2, image3;
     public boolean moving = false;
 
@@ -67,9 +68,10 @@ public class UI_UnitFrame extends UI {
         int portraitY = y+22;
         int portraitDim = 70;
         health = ent.currentHealth + "/" + ent.health;
+        resource = ent.currentResource + "/" + ent.maxResource;
         hpPercent = (double) ent.currentHealth / ent.health;
         healthWidth = (int) ((width / 2 + 12) * hpPercent);
-        resourcePercent = (double) ent.currentResource / ent.resource;
+        resourcePercent = (double) ent.currentResource / ent.maxResource;
         resourceWidth = (int) ((width / 2 + 12) * resourcePercent);
         g2.setColor(Color.black);
         g2.fillOval(portraitX, portraitY, portraitDim, portraitDim);
@@ -79,7 +81,8 @@ public class UI_UnitFrame extends UI {
         g2.drawImage(image, x, y, width, height, null);
         g2.setColor(Color.white);
         g2.drawString(ent.name, x + 120, y + 42);
-        g2.drawString(health, x + 120 + 85, y + 42);
+        g2.drawString(health, x + 120 + 80, y + 42);
+        g2.drawString(resource, x + 120 + 40, y + 63);
 
     }
 

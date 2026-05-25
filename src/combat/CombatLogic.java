@@ -73,8 +73,12 @@ public class CombatLogic {
 
 
         target.currentHealth -= damageDone;
+        gp.p1.currentResource += 0.8*damageDone;
         int damageX = (int) target.x;
         int damageY = (int) target.y;
+        if (gp.p1.currentResource > gp.p1.maxResource) {
+            gp.p1.currentResource = gp.p1.maxResource;
+        }
 
 
 

@@ -61,6 +61,7 @@ public class MainP extends javax.swing.JPanel implements Runnable {
     public UI_LootWindow lW_UI = new UI_LootWindow(this);
     public CombatLogic combatLogic = new CombatLogic(this);
     public UI_DamageNumberManager damageNumberManager= new UI_DamageNumberManager(this);
+    public UI_KeyBindGuide kbg_UI = new UI_KeyBindGuide();
 
 
     public Font font;
@@ -119,6 +120,7 @@ public class MainP extends javax.swing.JPanel implements Runnable {
 
         uiManager.add(ufOwn_UI);
         uiManager.add(ufTarget_UI);
+        uiManager.add(kbg_UI);
         uiManager.add(i_UI);
         uiManager.add(c_UI);
 
@@ -133,6 +135,8 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         ufOwn_UI.toggle();
         ab_UI.toggle();
         d_UI.loadAllMenus();
+        kbg_UI.toggle();
+        ufOwn_UI.closeOnEsc = false;
     }
 
     public void entInit() {

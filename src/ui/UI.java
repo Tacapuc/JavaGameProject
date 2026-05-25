@@ -12,6 +12,7 @@ public abstract class UI {
 
     public boolean visible = false;
     public double scale = 1;
+    public boolean closeOnEsc = true;
 
     public void show() {
         visible = true;

@@ -150,21 +150,7 @@ public class MouseH implements MouseMotionListener, MouseListener {
 
     }
 
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
-        hoverEnt();
-        hoverEnemy();
-
-        //flytta på ramen av spelarens liv om man vill
-        if (gp.ufOwn_UI.moving) {
-            gp.ufOwn_UI.x = mouseX;
-            gp.ufOwn_UI.y = mouseY;
-
-        }
-
-
+    public void callTooltips() {
         //tooltips för olika menyer
 
 
@@ -182,6 +168,26 @@ public class MouseH implements MouseMotionListener, MouseListener {
             hoveringItem = false;
             hoveredItem = null;
         }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+        hoverEnt();
+        hoverEnemy();
+
+        //flytta på ramen av spelarens liv om man vill
+        if (gp.ufOwn_UI.moving) {
+            gp.ufOwn_UI.x = mouseX;
+            gp.ufOwn_UI.y = mouseY;
+
+        }
+
+        callTooltips();
+
+
+
 
         //skannar efter vilken button vi hoverar över om vi har en dropdownmenu öppen
 
@@ -308,6 +314,7 @@ public class MouseH implements MouseMotionListener, MouseListener {
         if (!hoveringItem && !hoveringFrame) {
             gp.d_UI.visible = false;
         }
+        callTooltips();
     }
 
     @Override
