@@ -14,7 +14,7 @@ import ui.UIManager;
 
 public class KeyH implements KeyListener {
 
-    public boolean moveup, movedown, moveleft, moveright, inventory;
+    public boolean moveup, movedown, moveleft, moveright;
     MainP gp;
 
     public KeyH(MainP gp) {
