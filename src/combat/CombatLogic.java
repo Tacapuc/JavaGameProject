@@ -35,8 +35,6 @@ public class CombatLogic {
         if (!attacking) {
             attacking = true;
             gp.p1.attacking = true;
-        } else {
-            return;
         }
     }
 
@@ -68,10 +66,7 @@ public class CombatLogic {
     Entity target = gp.mouseH.targetedEnt;
 
     if (checkFacing(gp.p1, target, 64) && target.attackable) {
-
         damageDone = rn.nextInt(20, 25);
-
-
         target.currentHealth -= damageDone;
         gp.p1.currentResource += 0.8*damageDone;
         int damageX = (int) target.x;
@@ -79,15 +74,10 @@ public class CombatLogic {
         if (gp.p1.currentResource > gp.p1.maxResource) {
             gp.p1.currentResource = gp.p1.maxResource;
         }
-
-
-
         gp.damageNumberManager.add(damageX, damageY, damageDone, Color.YELLOW);
-
         if (target.currentHealth <= 0) {
             target.die();
         }
-
         attackCooldown = attackInterval * 60;
     
 }
@@ -96,30 +86,23 @@ public class CombatLogic {
     //om mainEnt kollar på checkedEnt i intervallet av range meter ska den returnera true
 
     public boolean checkFacing(Entity mainEnt, Entity checkedEnt, int range) {
-
         int x = mainEnt.screenX;
         int y = mainEnt.screenY;
-
         int boxX = x;
         int boxY = y;
-
         switch (mainEnt.direction) {
             case "up":
                 boxY -= range;
                 break;
-
             case "down":
                 boxY += range;
                 break;
-
             case "left":
                 boxX -= range;
                 break;
-
             case "right":
                 boxX += range;
                 break;
-
             default:
                 return false;
         }
