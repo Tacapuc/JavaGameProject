@@ -60,9 +60,8 @@ public class MainP extends javax.swing.JPanel implements Runnable {
     public UI_Spellbook s_UI = new UI_Spellbook(this, p1);
     public UI_LootWindow lW_UI = new UI_LootWindow(this);
     public CombatLogic combatLogic = new CombatLogic(this);
-    public UI_DamageNumberManager damageNumberManager= new UI_DamageNumberManager(this);
+    public UI_DamageNumberManager damageNumberManager = new UI_DamageNumberManager(this);
     public UI_KeyBindGuide kbg_UI = new UI_KeyBindGuide();
-
 
     public Font font;
     public Color titleColor = new Color(204, 153, 0);
@@ -74,8 +73,6 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         System.out.println(this.scHeight);
         e1.x = 576;
         e1.y = 576;
-
-
 
         this.setBackground(Color.green);
         this.setDoubleBuffered(true);
@@ -93,23 +90,20 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         uiInit();
         entInit();
         initLoot();
+        iH.allItems();
 
         //custom font
-
-        try {font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("frizqt.ttf")).deriveFont(11f);
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("frizqt.ttf")).deriveFont(11f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
 
-
-
-
     }
 
     //lägga in saker i loottabellen för en fiende
-
     public void initLoot() {
         e1.lootTable.addLootItem(new LootItem(iH.getItem(0), 0.8));
         e1.lootTable.addLootItem(new LootItem(iH.getItem(2), 0.2));
@@ -127,7 +121,6 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         uiManager.add(ab_UI);
         uiManager.add(s_UI);
         uiManager.add(lW_UI);
-
 
         uiManager.add(t_UI);
         uiManager.add(d_UI);
@@ -190,9 +183,7 @@ public class MainP extends javax.swing.JPanel implements Runnable {
 
     }
 
-
     //det här hanterar det mesta av logiken i spelet men allt rörelse relaterat borde egentligen ha flyttats till player klassen.
-
     public void update() {
 
         damageNumberManager.update();
@@ -223,12 +214,10 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         }
 
         //var spelaren hypotetiskt skulle hamna
-
         double nextX = p1.x + dx;
         double nextY = p1.y + dy;
 
         //om det är ingen kollision då flyttar vi
-
         if (!tileM.isCollision(nextX, p1.y, p1)) {
             p1.x = nextX;
         }
@@ -236,8 +225,6 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         if (!tileM.isCollision(p1.x, nextY, p1)) {
             p1.y = nextY;
         }
-
-
 
 // Centrera kameran/"världen" på spelaren
         cameraX = (int) (p1.x - scWidth / 2 + tileSize / 2);
@@ -272,7 +259,6 @@ public class MainP extends javax.swing.JPanel implements Runnable {
     @Override
 
     //logik för att uppdatera spelet fps gånger per sekund
-
     public void run() {
         double drawInterval = (double) 1000000000 / fps;
         double nextDrawTime = System.nanoTime() + drawInterval;
@@ -280,7 +266,12 @@ public class MainP extends javax.swing.JPanel implements Runnable {
         while (gameThread != null) {
             combatLogic.attack();
             update();
-            repaint();
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    repaint();
+                }
+            });
 
             try {
                 double remTime = nextDrawTime - System.nanoTime();

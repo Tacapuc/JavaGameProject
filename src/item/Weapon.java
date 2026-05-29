@@ -8,10 +8,10 @@ package item;
  *
  * @author ilya.bespalov
  */
-public class ItemEquipment extends Item{
-    int[] stats;
-    public ItemEquipment(int id, int quality, String name, String filePath, String type, int itemSlot) {
-        super(id, quality, name, filePath, type, itemSlot);
+public class Weapon extends Item {
+
+
+    public Weapon(int id, int quality, String name, String filePath, String type, int itemSlot, Stats stats) {
+        super(id, quality, name, filePath, type, itemSlot, stats);
     }
-    
 }

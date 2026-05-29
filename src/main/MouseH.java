@@ -128,6 +128,10 @@ public class MouseH implements MouseMotionListener, MouseListener {
                     dStrings.add(items.get(i).name);
                     dStrings.add(items.get(i).type);
                     dStrings.add(items.get(i).getQuality());
+                    dStrings.addAll(items.get(i).stats.guiGetStats());
+                    for (int j = 0; j < 10; j++) {
+                        
+                    }
                     gp.t_UI.dStrings = dStrings;
                     int longestString = 0;
                     //försök på anpassade tooltips efter längden i tecken

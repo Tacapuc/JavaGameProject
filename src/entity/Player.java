@@ -8,7 +8,7 @@ package entity;
  *
  * @author ilya.bespalov
  */
-import item.Item;
+import item.*;
 import main.MainP;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -17,6 +17,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Player extends Entity {
+    public Stats stats;
 
 
     public ArrayList<Item> pItems = new ArrayList<>();
@@ -24,6 +25,13 @@ public class Player extends Entity {
 
     public Player(String name, int health, int resource, String model, MainP gp) {
         super(name, health, resource, model, gp);
+        stats = new Stats(0,0,0,0);
+    }
+    
+    public void updateHealth() {
+        health = 100 + stats.stamina*10;
+        
+        
     }
 
 }

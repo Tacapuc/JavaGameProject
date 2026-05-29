@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import main.MainP;
 import entity.Player;
+import java.util.ArrayList;
 
 public class UI_CharacterSheet extends UI {
 
@@ -65,7 +66,12 @@ public class UI_CharacterSheet extends UI {
             }
 
         }
-        g2.drawImage(p.down, x+28, y+64, 322, 322, null);
+        for (int i = 0; i < gp.p1.stats.guiGetStats().size(); i++) {
+            g2.drawString(gp.p1.stats.guiGetStats().get(i), x+72, y+i*15+96);
+            
+        }
+        
+        g2.drawImage(p.down, x+60, y+128, 256, 256, null);
 
 
     }

@@ -13,6 +13,7 @@ import main.MainP;
 public abstract class Item {
 
     public int id;
+    public Stats stats;
     public int quality;
     public String name;
     public String filePath;
@@ -24,8 +25,9 @@ public abstract class Item {
     public int y;
     MainP gp;
 
-    public Item(int id, int quality, String name, String filePath, String type, int itemSlot) {
+    public Item(int id, int quality, String name, String filePath, String type, int itemSlot, Stats stats) {
         this.id = id;
+        this.stats = stats;
         this.quality = quality;
         this.name = name;
         this.filePath = filePath;

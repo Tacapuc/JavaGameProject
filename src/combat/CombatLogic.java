@@ -66,7 +66,7 @@ public class CombatLogic {
     Entity target = gp.mouseH.targetedEnt;
 
     if (checkFacing(gp.p1, target, 64) && target.attackable) {
-        damageDone = rn.nextInt(20, 25);
+        damageDone = rn.nextInt(20, 25) + rn.nextInt(2, 4)*gp.p1.stats.attackPower;
         target.currentHealth -= damageDone;
         gp.p1.currentResource += 0.8*damageDone;
         int damageX = (int) target.x;

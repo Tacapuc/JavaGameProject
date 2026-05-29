@@ -5,14 +5,31 @@
         <group>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/main/MainF.java</file>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/entity/Entity.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/item/Armor.java</file>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/item/Item.java</file>
-            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/item/ItemEquipment.java</file>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/item/ItemHandler.java</file>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/entity/Player.java</file>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/main/MouseH.java</file>
-            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/tile/TileManager.java</file>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/entity/Enemy.java</file>
             <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/main/KeyH.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/main/MainP.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/resources/maps/castletest</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UIManager.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UI.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UI_ActionBar.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UI_UnitFrame.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UI_Tooltip.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UI_DropdownBtn.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UI_DropdownMenu.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/loot/LootItem.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/loot/LootTable.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/combat/CombatLogic.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/tile/TileManager.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/main/MapEditor.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/item/Weapon.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/entity/EntityManager.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/item/Stats.java</file>
+            <file>file:/C:/Users/ilya.bespalov/Downloads/JavaGameProject/src/ui/UI_CharacterSheet.java</file>
         </group>
     </open-files>
 </project-private>
