@@ -44,7 +44,7 @@ public class UI_Tooltip extends UI {
         if(!visible) return;
         FontMetrics fm = g2.getFontMetrics();
         dWidth = fm.charWidth('A')*longestString;
-        dHeight = 15 + dStrings.size()*10;
+        dHeight = 17 + dStrings.size()*10;
         int xPre =  x-dWidth+20;
         int yPre = y-dHeight+10;
         if (xPre < 0) {
@@ -62,13 +62,13 @@ public class UI_Tooltip extends UI {
          g2.drawString(dStrings.get(0), xPre+5, yPre+15);
          g2.setColor(Color.white);
         for (int i = 1; i < 3; i++) {
-            g2.drawString(dStrings.get(i),  xPre+5, yPre+15+10*i);
+            g2.drawString(dStrings.get(i),  xPre+5, yPre+15+11*i);
             
             
         }
-        g2.setColor(Color.yellow);
+        g2.setColor(new Color(30, 255, 0));
         for (int i = 3; i < dStrings.size(); i++) {
-            g2.drawString(dStrings.get(i),  xPre+5, yPre+15+10*i);
+            g2.drawString(dStrings.get(i),  xPre+5, yPre+15+11*i);
             
             
         }

@@ -88,6 +88,13 @@ public class ItemHandler {
 
             }
         }
+        gp.p1.stats = new Stats(0, 0, 0, 0);
+        for (int j = 0; j < gp.p1.pItemsEquipped.size(); j++) {
+
+            gp.p1.stats.addStats(gp.p1.pItemsEquipped.get(j).stats);
+        }
+        System.out.println(gp.p1.stats);
+        gp.p1.updateHealth();
     }
 
     public void equipItem(Item i) {

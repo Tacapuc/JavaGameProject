@@ -128,7 +128,7 @@ public class MouseH implements MouseMotionListener, MouseListener {
                     dStrings.add(items.get(i).name);
                     dStrings.add(items.get(i).type);
                     dStrings.add(items.get(i).getQuality());
-                    dStrings.addAll(items.get(i).stats.guiGetStats());
+                    dStrings.addAll(items.get(i).stats.guiGetStats(true));
                     for (int j = 0; j < 10; j++) {
                         
                     }
@@ -156,21 +156,20 @@ public class MouseH implements MouseMotionListener, MouseListener {
 
     public void callTooltips() {
         //tooltips för olika menyer
+        gp.t_UI.visible = false;
+        hoveringItem = false;
+        hoveredItem = null;
 
 
         if (gp.c_UI.visible) {
             tooltip(p.pItemsEquipped);
 
-        } else if (gp.i_UI.visible) {
+        } if (!hoveringItem && gp.i_UI.visible) {
             tooltip(p.pItems);
 
-        } else if (gp.lW_UI.visible) {
+        } if (!hoveringItem && gp.lW_UI.visible) {
             tooltip(gp.lW_UI.npc.drops);
 
-        } else {
-            gp.t_UI.visible = false;
-            hoveringItem = false;
-            hoveredItem = null;
         }
     }
 

@@ -24,8 +24,31 @@ public class Stats {
         this.armor = armor;
         
     }
-    public ArrayList<String> guiGetStats() {
+    public ArrayList<String> guiGetStats(boolean trimmed) {
         ArrayList<String> strings = new ArrayList<>();
+        if (trimmed) {
+            if (attackPower != 0) {
+                String ap = "Attack Power: +" + attackPower;
+                strings.add(ap);
+
+            }
+            if (critChance != 0) {
+                String crit = "Critical Strike Rating: +" + critChance;
+                strings.add(crit);
+            }
+            if (armor != 0) {
+                String armour = "Armor: +" + armor;
+                strings.add(armour);
+
+            }
+
+            if (stamina != 0) {
+                String hp = "Stamina: +" + stamina;
+                strings.add(hp);
+
+            }
+            return strings;
+        }
         String crit = "Critical Strike Rating: " + critChance;
         String ap = "Attack Power: " + attackPower;
         String hp = "Stamina: " + stamina;

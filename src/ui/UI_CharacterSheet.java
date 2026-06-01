@@ -66,8 +66,8 @@ public class UI_CharacterSheet extends UI {
             }
 
         }
-        for (int i = 0; i < gp.p1.stats.guiGetStats().size(); i++) {
-            g2.drawString(gp.p1.stats.guiGetStats().get(i), x+72, y+i*15+96);
+        for (int i = 0; i < gp.p1.stats.guiGetStats(false).size(); i++) {
+            g2.drawString(gp.p1.stats.guiGetStats(false).get(i), x+72, y+i*15+96);
             
         }
         
