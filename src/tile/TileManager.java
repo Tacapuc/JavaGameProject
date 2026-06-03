@@ -25,6 +25,7 @@ public class TileManager {
     public int spawnRow = 0;
     int waterTick =0;
     int waterImage =0;
+    Boolean debugCamera = false;
     ArrayList<BufferedImage> waterImages = new ArrayList<>();
 
 
@@ -180,6 +181,7 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2) {
+       
         updateWater(60);
         //räknar ut vilken tile kameran "börjar i"
         int firstCol = gp.cameraX / gp.tileSize;
@@ -212,6 +214,13 @@ public class TileManager {
                         gp.tileSize, gp.tileSize, null);
             }
         }
+         if (debugCamera) {
+            g2.drawString("Camera", gp.cameraX, gp.cameraY);
+            g2.drawString("Screen", gp.p1.screenX, gp.p1.screenY);
+            g2.drawString("playerPos", (int) gp.p1.x, (int) gp.p1.y);
+            
+        }
+        
     }
 
     public boolean isCollision(double nextX, double nextY, Player player) {
